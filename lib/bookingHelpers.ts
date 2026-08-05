@@ -28,7 +28,7 @@ export async function checkCapacity(
     .eq("key", capacityKey)
     .maybeSingle();
 
-  const rawCapacity = (capacityRow as Record<string, unknown> | null)?.capacity;
+  const rawCapacity = (capacityRow as unknown as Record<string, unknown> | null)?.capacity;
   const capacity: number | null = rawCapacity === null || rawCapacity === undefined ? null : Number(rawCapacity);
 
   // Nessun limite configurato: la richiesta è sempre accettata.
@@ -38,11 +38,15 @@ export async function checkCapacity(
 
   let occupied = 0;
   if (unitsColumn) {
+    // Selezioniamo tutte le colonne con "*" (stringa letterale) invece del
+    // solo nome dinamico: Supabase riesce a tipizzare correttamente solo
+    // quando l'argomento di .select() è una stringa letterale, non una
+    // variabile — così evitiamo il problema alla radice.
     const { data } = await supabase
       .from(table)
-      .select(unitsColumn)
+      .select("*")
       .in("status", ["ricevuta", "in-attesa", "confermata"]);
-    const rows: Array<Record<string, unknown>> = data ?? [];
+    const rows = (data ?? []) as Array<Record<string, unknown>>;
     occupied = rows.reduce((sum, row) => sum + (Number(row[unitsColumn]) || 0), 0);
   } else {
     const { count } = await supabase
