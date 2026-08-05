@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ue-black text-ue-white font-body antialiased;
+}
+
+/* Focus visibile per navigazione da tastiera */
+:focus-visible {
+  outline: 2px solid theme("colors.ue.red");
+  outline-offset: 3px;
+}
+
+.container-ue {
+  @apply mx-auto w-full max-w-7xl px-6 md:px-10;
+}
+
+.eyebrow {
+  @apply text-xs md:text-sm tracking-widest2 uppercase text-ue-red font-semibold;
+}
+
+.hairline {
+  @apply border-ue-line;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 min-h-[44px] bg-ue-white text-ue-black font-display font-semibold tracking-wide uppercase text-sm transition-colors duration-300 hover:bg-ue-red hover:text-ue-white;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 min-h-[44px] border border-ue-white/40 text-ue-white font-display font-semibold tracking-wide uppercase text-sm transition-colors duration-300 hover:border-ue-red hover:text-ue-red;
+}
+
+.btn-disabled {
+  @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 min-h-[44px] border border-ue-line text-ue-smoke font-display font-semibold tracking-wide uppercase text-sm cursor-not-allowed opacity-60;
+}
+
+/* Rispetta le preferenze di riduzione del movimento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,44 @@
+<!--
+  Questo file NON viene visitato dagli utenti. Serve solo a far rilevare a
+  Netlify, in fase di build, i campi dei moduli "Contatti" e "Preventivo"
+  (renderizzati lato client, quindi non visibili al crawler di Netlify Forms
+  nell'HTML statico). Vedi README.md, sezione "Contatti e Preventivo via email".
+
+  I moduli di prenotazione dell'evento (lista, spiedo, torneo, candidatura
+  auto) NON passano da Netlify Forms: scrivono nel database Supabase tramite
+  le API route in app/api/. Vedi README.md, sezione "Database (Supabase)".
+-->
+<!DOCTYPE html>
+<html lang="it">
+<body>
+
+  <form name="contatti" data-netlify="true" hidden>
+    <input type="text" name="nome" />
+    <input type="text" name="cognome" />
+    <input type="email" name="email" />
+    <input type="tel" name="telefono" />
+    <textarea name="messaggio"></textarea>
+    <input type="checkbox" name="privacy" />
+    <input type="checkbox" name="marketing" />
+  </form>
+
+  <form name="preventivo" data-netlify="true" hidden>
+    <input type="text" name="nome" />
+    <input type="text" name="cognome" />
+    <input type="text" name="azienda" />
+    <input type="email" name="email" />
+    <input type="tel" name="telefono" />
+    <input type="text" name="tipologia" />
+    <input type="date" name="data_prevista" />
+    <input type="text" name="localita" />
+    <input type="number" name="partecipanti" />
+    <input type="text" name="budget" />
+    <textarea name="descrizione"></textarea>
+    <input type="text" name="servizi" />
+    <input type="text" name="modalita_contatto" />
+    <input type="checkbox" name="privacy" />
+    <input type="checkbox" name="marketing" />
+  </form>
+
+</body>
+</html>
