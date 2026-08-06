@@ -19,7 +19,7 @@ export const confirmedPartners: Partner[] = [
   },
   {
     name: "Honest",
-    logo: "[LOGO HONEST]", // logo non ancora fornito
+    logo: "/images/partners/honest.png",
   },
 ];
 
