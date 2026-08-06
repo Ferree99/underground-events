@@ -6,12 +6,14 @@
 --
 -- Copre SOLO i moduli con posti limitati e stato di conferma:
 --   - lista evento / promo drink
---   - prenotazione spiedo
---   - iscrizione torneo (Beach Volley Alcolico)
 --   - candidatura auto (area automotive)
 --
 -- Contatti e Preventivo NON passano da qui: vanno via email tramite
 -- Netlify Forms (vedi README, sezione "Contatti e Preventivo via email").
+--
+-- Nota: spiedo e torneo Beach Volley erano previsti inizialmente ma sono
+-- stati tolti dall'evento — le relative tabelle sono state rimosse anche
+-- dal database live (nessun dato presente al momento della rimozione).
 -- ============================================================================
 
 -- Stato condiviso da tutte le richieste, coerente con quello già usato nella
@@ -31,7 +33,7 @@ create type booking_status as enum (
 -- capacity = null significa "nessun limite".
 -- ----------------------------------------------------------------------------
 create table capacity_settings (
-  key text primary key,           -- 'lista-evento' | 'spiedo' | 'torneo-squadre'
+  key text primary key,           -- 'lista-evento' | 'auto-candidature'
   label text not null,
   capacity integer,               -- null = illimitato
   updated_at timestamptz not null default now()
@@ -39,11 +41,9 @@ create table capacity_settings (
 
 insert into capacity_settings (key, label, capacity) values
   ('lista-evento', 'Lista evento (persone)', null),
-  ('spiedo', 'Prenotazioni spiedo (persone)', null),
-  ('torneo-squadre', 'Squadre torneo Beach Volley', null),
   ('auto-candidature', 'Candidature area automotive (auto)', null);
--- Sostituisci "null" con il numero reale di posti/squadre quando lo conoscete,
--- ad es.: update capacity_settings set capacity = 150 where key = 'spiedo';
+-- Sostituisci "null" con il numero reale di posti quando lo conoscete,
+-- ad es.: update capacity_settings set capacity = 300 where key = 'lista-evento';
 
 -- ----------------------------------------------------------------------------
 -- Lista evento + promo drink
@@ -60,43 +60,6 @@ create table guest_list_entries (
   data_nascita date,
   consenso_marketing boolean not null default false,
   status booking_status not null default 'ricevuta',
-  created_at timestamptz not null default now()
-);
-
--- ----------------------------------------------------------------------------
--- Prenotazione spiedo
--- ----------------------------------------------------------------------------
-create table spiedo_bookings (
-  id uuid primary key default gen_random_uuid(),
-  code text not null unique,
-  event_slug text not null default 'last-call-2026',
-  nome text not null,
-  cognome text not null,
-  email text not null,
-  telefono text not null,
-  persone integer not null default 1,
-  allergie text,
-  note text,
-  status booking_status not null default 'in-attesa',
-  created_at timestamptz not null default now()
-);
-
--- ----------------------------------------------------------------------------
--- Iscrizione torneo (Beach Volley Alcolico)
--- ----------------------------------------------------------------------------
-create table tournament_teams (
-  id uuid primary key default gen_random_uuid(),
-  code text not null unique,
-  event_slug text not null default 'last-call-2026',
-  nome_squadra text not null,
-  referente_nome text not null,
-  referente_email text not null,
-  referente_telefono text not null,
-  numero_partecipanti integer not null,
-  componenti text not null,          -- elenco nomi, testo libero
-  riserve text,
-  note text,
-  status booking_status not null default 'in-attesa',
   created_at timestamptz not null default now()
 );
 
@@ -129,8 +92,6 @@ create table vehicle_applications (
 -- client resta bloccata di default: RLS abilitata, nessuna policy pubblica.
 -- ----------------------------------------------------------------------------
 alter table guest_list_entries enable row level security;
-alter table spiedo_bookings enable row level security;
-alter table tournament_teams enable row level security;
 alter table vehicle_applications enable row level security;
 alter table capacity_settings enable row level security;
 -- Nessuna "create policy": senza policy pubbliche, solo la service role key

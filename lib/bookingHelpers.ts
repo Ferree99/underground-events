@@ -1,19 +1,18 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-/** Genera un codice identificativo leggibile, es. UE-SPIEDO-482913 */
+/** Genera un codice identificativo leggibile, es. UE-LISTA-482913 */
 export function generateBookingCode(prefix: string) {
   const n = Math.floor(100000 + Math.random() * 900000);
   return `UE-${prefix}-${n}`;
 }
 
 /**
- * Confronta il numero di posti/squadre già occupati con la capacità
+ * Confronta il numero di richieste già registrate con la capacità
  * configurata in `capacity_settings` (modificabile da Supabase senza
  * toccare codice). Se capacity è null, i posti sono illimitati.
  *
  * `countUnits` = quante "unità" occupa la richiesta corrente (es. il numero
- * di persone per la lista/spiedo, il numero di squadre — sempre 1 — per il
- * torneo).
+ * di persone per la lista evento, sempre 1 per una candidatura auto).
  */
 export async function checkCapacity(
   supabase: SupabaseClient,

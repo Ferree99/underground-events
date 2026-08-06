@@ -28,7 +28,7 @@ npm run start
 ```
 app/                    → pagine (routing basato su file, App Router)
 components/             → componenti riutilizzabili
-components/forms/       → moduli (lista, spiedo, torneo, auto, preventivo, contatti)
+components/forms/       → moduli (lista, candidatura auto, preventivo, contatti)
 content/                → TUTTI i dati modificabili, separati dai componenti
 public/images/          → asset statici (logo, favicon, immagini, OG)
 public/__forms.html     → form "ombra" statico per il rilevamento di Netlify Forms
@@ -48,7 +48,7 @@ Non serve toccare i componenti: i testi si modificano nei file dentro `content/`
 | `content/events.ts` | Archivio eventi (aggiungi qui i prossimi eventi) |
 | `content/lastCall2026.ts` | Tutti i dati ufficiali di LAST CALL 2026 |
 | `content/drinkPromotions.ts` | Promo drink (orari, prezzi) |
-| `content/bookingSettings.ts` | Tutti i dati **non presenti nel PDF originale** (prezzo spiedo, quota torneo, ecc.) — sostituisci ogni `[DA DEFINIRE]` |
+| `content/bookingSettings.ts` | Dati per Beer Pong/giochi e per la candidatura auto **non presenti nel PDF originale** — sostituisci ogni `[DA DEFINIRE]` |
 | `content/partners.ts` | Partner, sponsor, media partner, fornitori |
 | `content/team.ts` | Team (vuoto: nessun nome era stato fornito) |
 | `content/faq.ts` | FAQ (vuoto: nessuna FAQ era stata fornita) |
@@ -106,7 +106,7 @@ Il file `public/__forms.html` è ciò che permette a Netlify di "vedere" questi 
 
 ## 7. Database (Supabase) per i moduli di prenotazione
 
-I moduli con **posti limitati e stato di conferma** — lista evento/promo drink, prenotazione spiedo, iscrizione torneo, candidatura auto — scrivono in un vero database (Postgres via Supabase), non in Netlify Forms. Questo permette di:
+I moduli con **posti limitati e stato di conferma** — lista evento/promo drink, candidatura auto — scrivono in un vero database (Postgres via Supabase), non in Netlify Forms. Questo permette di:
 
 - contare automaticamente i posti/persone/squadre già occupati;
 - passare in automatico le nuove richieste a **"lista d'attesa"** quando i posti configurati sono esauriti;
@@ -133,14 +133,12 @@ Nella tabella `capacity_settings` (Supabase → Table Editor) trovi una riga per
 | key | a cosa corrisponde |
 |---|---|
 | `lista-evento` | somma delle persone in lista |
-| `spiedo` | somma delle persone prenotate a pranzo |
-| `torneo-squadre` | numero di squadre iscritte |
 | `auto-candidature` | numero di auto candidate |
 
-Il campo `capacity` è vuoto (`null`) di default, cioè **nessun limite**. Per impostare un tetto, modifica direttamente il valore da Supabase — ad esempio per limitare lo spiedo a 150 persone:
+Il campo `capacity` è vuoto (`null`) di default, cioè **nessun limite**. Per impostare un tetto, modifica direttamente il valore da Supabase — ad esempio per limitare la lista a 300 persone:
 
 ```sql
-update capacity_settings set capacity = 150 where key = 'spiedo';
+update capacity_settings set capacity = 300 where key = 'lista-evento';
 ```
 
 Da quel momento, quando la somma delle persone già registrate raggiunge 150, le richieste successive vengono salvate automaticamente con stato `lista-attesa` invece di `in-attesa`, e il modulo mostra all'utente il messaggio corrispondente.
@@ -152,7 +150,7 @@ Supabase → **Table Editor** mostra ogni tabella come un foglio di calcolo: puo
 ### 7.5 Cosa NON è ancora incluso
 
 - Non viene inviata automaticamente un'email di conferma alla persona che prenota (il sito mostra solo il messaggio a schermo con il codice identificativo). Se vuoi anche l'email automatica, si può aggiungere in un secondo momento con un servizio come Resend o con le funzioni email di Supabase.
-- I valori mostrati sulle pagine (prezzo spiedo, quota torneo, ecc., in `content/bookingSettings.ts`) restano testo statico da aggiornare a mano: non sono ancora collegati al database. Il database gestisce solo il conteggio dei posti, non i testi descrittivi.
+- I valori mostrati sulle pagine (candidatura auto, in `content/bookingSettings.ts`) restano testo statico da aggiornare a mano: non sono ancora collegati al database. Il database gestisce solo il conteggio dei posti, non i testi descrittivi.
 
 ---
 
@@ -160,21 +158,17 @@ Supabase → **Table Editor** mostra ogni tabella come un foglio di calcolo: puo
 
 ## 8. Dati ancora mancanti (da completare prima della pubblicazione)
 
-Tutti raccolti in `content/bookingSettings.ts`, marcati `[DA DEFINIRE]`:
-
-- Prezzo dello spiedo, menu, termine prenotazioni, posti disponibili, metodo di pagamento
-- Giocatori per squadra, squadre disponibili, quota torneo (e cosa comprende), ritrovo, premi,
-  chiusura iscrizioni, metodo di pagamento, formula del torneo
 - Regole di accesso, criteri di selezione, costo, registrazione, orario consigliato, categorie ammesse
-  e capienza per l'area automotive
+  e capienza per l'area automotive (in `content/bookingSettings.ts`, marcati `[DA DEFINIRE]`)
+- Orario del blocco "Game Time" nel programma di LAST CALL (Beer Pong, giochi, sfide, premi) — segnato
+  `[DA DEFINIRE]` dopo lo spostamento dell'apertura evento alle 17:00
 - Parcheggi, accessibilità, trasporto, ingresso, regole location, gestione maltempo (`venueInfo`)
-- Dati di contatto e fiscali (`siteSettings.contact`): email, telefono, Instagram, TikTok, indirizzo, P.IVA
-- Testi legali definitivi (Privacy, Cookie, Termini, Regolamento torneo, Condizioni spiedo) — le pagine
-  contengono bozze operative con la dicitura obbligatoria "Bozza da verificare con un professionista
-  prima della pubblicazione."
-- Asset del logo vettoriale (vedi punto 4) e tutte le immagini/video segnati con `[FOTO ...]` / `[VIDEO ...]`
-- Foto, biografia, social e orario individuale dei tre artisti in lineup (MARCO DECIBEL, PALAZ, MELLU)
-- Logo di Street Car Therapy
+- Dati di contatto e fiscali ancora mancanti (`siteSettings.contact`): telefono, indirizzo, P.IVA
+- Testi legali definitivi (Privacy, Cookie, Termini) — le pagine contengono bozze operative con la
+  dicitura obbligatoria "Bozza da verificare con un professionista prima della pubblicazione."
+- Biografia e orario individuale dei tre artisti in lineup (MARCO DECIBEL, PALAZ, MELLU) — foto e
+  social sono già presenti
+- Logo di Honest (Street Car Therapy, Distretto 11 e gli sponsor sono già presenti)
 
 ---
 
@@ -200,7 +194,7 @@ Tutti raccolti in `content/bookingSettings.ts`, marcati `[DA DEFINIRE]`:
 - [ ] Sostituiti tutti i valori `[DA DEFINIRE]` in `content/bookingSettings.ts` e `content/siteSettings.ts`
 - [ ] Caricati gli asset reali del logo in `public/images/logo/` e aggiornato `components/Logo.tsx`
 - [ ] Caricate le immagini/video reali al posto dei segnaposto `[FOTO ...]` / `[VIDEO ...]` rimasti
-- [ ] Testi legali (Privacy, Cookie, Termini, Regolamento torneo, Condizioni spiedo) verificati da un
+- [ ] Testi legali (Privacy, Cookie, Termini) verificati da un
       professionista e rimossa la dicitura "Bozza da verificare"
 - [ ] Progetto Supabase creato, `db/schema.sql` eseguito, variabili d'ambiente impostate su Netlify
 - [ ] Posti configurati in `capacity_settings` (o lasciati illimitati volontariamente)
@@ -218,9 +212,8 @@ Tutti raccolti in `content/bookingSettings.ts`, marcati `[DA DEFINIRE]`:
 
 Per restare fedele al brief senza inventare contenuti, in questa prima consegna sono stati completati:
 Home, LAST CALL 2026, Chi siamo, Servizi, Eventi (archivio con ricerca/filtri), Partner, Contatti,
-Preventivo, Privacy Policy, Cookie Policy, Termini, Regolamento torneo, Condizioni spiedo, pagina di
-conferma prenotazione, 404 personalizzata, sitemap.xml, robots.txt, tutti i componenti e i moduli
-richiesti.
+Preventivo, Privacy Policy, Cookie Policy, Termini, pagina di conferma prenotazione, 404 personalizzata,
+sitemap.xml, robots.txt, tutti i componenti e i moduli richiesti.
 
 Aree che restano intenzionalmente semplici e possono essere ampliate in un secondo passaggio:
 galleria con lightbox interattivo (attualmente griglia statica di segnaposto), micro-animazioni
