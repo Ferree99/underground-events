@@ -8,14 +8,14 @@ export const lastCall2026 = {
   claim: "L'ultima chiamata dell'estate",
   date: "2026-09-05",
   dateLabel: "Sabato 5 settembre 2026",
-  openingTime: "10:30",
+  openingTime: "17:00",
   closingTime: "00:00", // mezzanotte
   location: {
-    name: "Darsena 3.0",
-    address: "Località Pizzone, 4",
-    postalCode: "25055",
-    city: "Pisogne",
-    province: "BS",
+    name: "Porto Turistico di Lovere",
+    address: "Via del Cantiere, 6",
+    postalCode: "24065",
+    city: "Lovere",
+    province: "BG",
   },
   organizers: "UNDERGROUND EVENTS × Street Car Therapy",
   collaborationText:
@@ -23,9 +23,9 @@ export const lastCall2026 = {
 
   description: {
     main:
-      "Una giornata immersa in una location unica, direttamente sulle rive del lago. Un grande prato ospiterà decine di auto sportive esposte lungo tutta l'area, creando uno scenario spettacolare che accompagnerà l'intera giornata. Dal mattino fino a mezzanotte troverai esposizione di auto sportive, DJ set, Food Area, Drink Area, attività, giochi, tramonto sul lago e party finale.",
+      "Una giornata immersa in una location unica, direttamente sulle rive del lago. Un grande prato ospiterà decine di auto sportive esposte lungo tutta l'area, creando uno scenario spettacolare che accompagnerà l'intera giornata. Dal tardo pomeriggio fino a mezzanotte troverai esposizione di auto sportive, DJ set, Food Area, Drink Area, attività, giochi, tramonto sul lago e party finale.",
     secondary:
-      "LAST CALL unisce il mondo delle auto sportive alla musica e al divertimento. Una giornata da vivere insieme, dal raduno del mattino fino al party finale di mezzanotte.",
+      "LAST CALL unisce il mondo delle auto sportive alla musica e al divertimento. Una giornata da vivere insieme, dal raduno del tardo pomeriggio fino al party finale di mezzanotte.",
   },
 
   whatToExpect: [
@@ -34,7 +34,6 @@ export const lastCall2026 = {
     "Food Area",
     "Drink Area",
     "Beer Pong",
-    "Beach Volley",
     "Attività e giochi",
     "Sfide",
     "Premi",
@@ -45,7 +44,7 @@ export const lastCall2026 = {
   // Programma ufficiale — non aggiungere orari non presenti nel documento.
   schedule: [
     {
-      time: "10:30",
+      time: "17:00",
       title: "Apertura raduno",
       items: [
         "Accoglienza dei partecipanti",
@@ -55,14 +54,9 @@ export const lastCall2026 = {
       ],
     },
     {
-      time: "12:30",
-      title: "Pranzo",
-      items: ["Spiedo su prenotazione", "Pranzo tutti insieme in perfetto stile Last Call"],
-    },
-    {
-      time: "15:00",
+      time: "[DA DEFINIRE]",
       title: "Game Time",
-      items: ["Beach Volley Alcolico su prenotazione", "Beer Pong", "Giochi", "Sfide", "Premi"],
+      items: ["Beer Pong", "Giochi", "Sfide", "Premi"],
     },
     {
       time: "18:00",
@@ -113,7 +107,5 @@ export const lastCall2026 = {
 
   status: {
     event: "lista-aperta" as const,
-    spiedoBooking: "aperte" as const,
-    tournamentBooking: "aperte" as const,
   },
 };

@@ -21,7 +21,23 @@ export default function LastCallHero() {
       />
 
       <div className="relative z-10 container-ue flex flex-col items-center text-center animate-tunnelIn">
-        <p className="eyebrow">{l.organizers}</p>
+        <div className="flex items-center gap-4 mb-2">
+          <Image
+            src="/images/logo/underground-events-lockup.png"
+            alt="Underground Events"
+            width={160}
+            height={122}
+            className="h-14 sm:h-16 w-auto"
+          />
+          <span className="text-2xl sm:text-3xl text-ue-white/70 font-display">×</span>
+          <Image
+            src="/images/partners/street-car-therapy.png"
+            alt="Street Car Therapy"
+            width={200}
+            height={133}
+            className="h-14 sm:h-16 w-auto"
+          />
+        </div>
         <h1 className="mt-4 font-display font-bold uppercase leading-[0.9] text-5xl sm:text-7xl md:text-8xl drop-shadow-[0_2px_20px_rgba(0,0,0,0.6)]">
           {l.name}
         </h1>
@@ -38,12 +54,6 @@ export default function LastCallHero() {
         <div className="mt-10 flex flex-wrap justify-center gap-4">
           <Link href="#lista" className="btn-primary">
             Mettiti in lista
-          </Link>
-          <Link href="#spiedo" className="btn-secondary">
-            Prenota lo spiedo
-          </Link>
-          <Link href="#torneo" className="btn-secondary">
-            Iscrivi la tua squadra
           </Link>
           <Link href="#programma" className="btn-secondary">
             Scopri il programma

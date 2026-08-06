@@ -4,21 +4,21 @@ export default function PartnerLogo({
   name,
   logo,
   description,
-  size = "md",
+  size = "lg",
 }: {
   name: string;
   logo: string;
   description?: string;
-  size?: "sm" | "md" | "lg";
+  size?: "md" | "lg" | "xl";
 }) {
   const hasRealLogo = logo.startsWith("/");
-  const heights = { sm: "h-10", md: "h-14", lg: "h-20" };
+  const heights = { md: "h-20", lg: "h-28", xl: "h-36" };
 
   return (
-    <div className="border border-ue-line px-8 py-6 text-center max-w-xs flex flex-col items-center justify-center gap-3">
+    <div className="flex flex-col items-center justify-center gap-4 text-center max-w-[220px]">
       {hasRealLogo ? (
         <div className={`relative w-full ${heights[size]}`}>
-          <Image src={logo} alt={name} fill className="object-contain" sizes="200px" />
+          <Image src={logo} alt={name} fill className="object-contain" sizes="260px" />
         </div>
       ) : (
         <p className="text-ue-smoke text-xs uppercase tracking-widest2">{logo}</p>

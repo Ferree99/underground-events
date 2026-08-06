@@ -13,8 +13,6 @@ const routes = [
   "/privacy-policy",
   "/cookie-policy",
   "/termini",
-  "/regolamento-torneo",
-  "/condizioni-spiedo",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

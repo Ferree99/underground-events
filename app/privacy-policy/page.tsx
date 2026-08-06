@@ -8,8 +8,8 @@ export default function PrivacyPolicyPage() {
     <LegalLayout title="Privacy Policy">
       <p>
         Questa informativa descrive come UNDERGROUND EVENTS raccoglie, utilizza e protegge i dati personali
-        forniti tramite i moduli del sito (lista evento, prenotazione spiedo, iscrizione torneo, candidatura
-        auto, richiesta preventivo, modulo contatti).
+        forniti tramite i moduli del sito (lista evento, candidatura auto, richiesta preventivo, modulo
+        contatti).
       </p>
 
       <h2>Titolare del trattamento</h2>
@@ -25,7 +25,6 @@ export default function PrivacyPolicyPage() {
       <h2>Finalità del trattamento</h2>
       <ul>
         <li>Gestione delle richieste di lista evento e promo drink</li>
-        <li>Gestione delle prenotazioni (spiedo, torneo)</li>
         <li>Gestione delle candidature auto</li>
         <li>Gestione di richieste di preventivo e contatti</li>
         <li>Comunicazioni operative relative all&apos;evento, dopo consenso esplicito</li>

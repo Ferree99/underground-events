@@ -15,8 +15,6 @@ export const footerLegalNav = [
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Cookie Policy", href: "/cookie-policy" },
   { label: "Termini e condizioni", href: "/termini" },
-  { label: "Regolamento torneo", href: "/regolamento-torneo" },
-  { label: "Condizioni spiedo", href: "/condizioni-spiedo" },
 ];
 
 export const footerQuickNav = [

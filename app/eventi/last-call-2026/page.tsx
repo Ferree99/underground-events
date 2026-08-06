@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import LastCallHero from "@/components/LastCallHero";
-import Logo from "@/components/Logo";
 import SectionTitle from "@/components/SectionTitle";
 import Timeline from "@/components/Timeline";
 import ArtistCard from "@/components/ArtistCard";
 import PromoDrinkCard from "@/components/PromoDrinkCard";
 import MapSection from "@/components/MapSection";
 import GuestListForm from "@/components/forms/GuestListForm";
-import SpiedoBookingForm from "@/components/forms/SpiedoBookingForm";
-import TournamentForm from "@/components/forms/TournamentForm";
 import VehicleApplicationForm from "@/components/forms/VehicleApplicationForm";
+import PartnerLogo from "@/components/PartnerLogo";
 import { lastCall2026 } from "@/content/lastCall2026";
 import { drinkPromotions } from "@/content/drinkPromotions";
 import { beerPongAndGames, vehicleApplication } from "@/content/bookingSettings";
 import { siteSettings } from "@/content/siteSettings";
+import { confirmedPartners, confirmedSponsors } from "@/content/partners";
 
 export const metadata: Metadata = {
   title: "LAST CALL 2026",
@@ -60,17 +59,7 @@ export default function LastCallPage() {
         <p className="text-lg md:text-2xl leading-relaxed max-w-3xl">{lastCall2026.description.main}</p>
         <p className="mt-6 text-ue-smoke max-w-3xl leading-relaxed">{lastCall2026.description.secondary}</p>
 
-        <div className="mt-10 flex flex-wrap items-center gap-6 border border-ue-line bg-ue-ink px-6 py-5 max-w-2xl">
-          <p className="eyebrow shrink-0">Organizzato da</p>
-          <div className="flex flex-wrap items-center gap-6">
-            <Logo variant="horizontal" className="h-8" />
-            <span className="text-ue-smoke text-lg">×</span>
-            <div className="relative h-10 w-32">
-              <Image src="/images/partners/street-car-therapy.png" alt="Street Car Therapy" fill className="object-contain object-left" />
-            </div>
-          </div>
-          <p className="w-full text-sm text-ue-smoke mt-1">{lastCall2026.collaborationText}</p>
-        </div>
+        <p className="mt-6 text-ue-smoke italic">{lastCall2026.collaborationText}</p>
       </section>
 
       {/* Cosa ti aspetta */}
@@ -125,24 +114,6 @@ export default function LastCallPage() {
         </div>
       </section>
 
-      {/* Spiedo */}
-      <section id="spiedo" className="container-ue py-24 border-t border-ue-line scroll-mt-24">
-        <SectionTitle eyebrow="Pranzo" title="Prenota lo spiedo" />
-        <div className="mt-10 max-w-xl">
-          <SpiedoBookingForm />
-        </div>
-      </section>
-
-      {/* Beach Volley / Torneo */}
-      <section id="torneo" className="border-t border-ue-line bg-ue-ink scroll-mt-24">
-        <div className="container-ue py-24">
-          <SectionTitle eyebrow="Game Time · 15:00" title="Iscrivi la tua squadra" />
-          <div className="mt-10 max-w-2xl">
-            <TournamentForm />
-          </div>
-        </div>
-      </section>
-
       {/* Beer Pong, giochi, sfide e premi */}
       <section className="container-ue py-24 border-t border-ue-line">
         <SectionTitle eyebrow="Game Time" title={beerPongAndGames.title} />
@@ -158,7 +129,7 @@ export default function LastCallPage() {
           <SectionTitle
             eyebrow="Raduno"
             title="Area automotive"
-            description="Apertura raduno alle 10:30: accoglienza dei partecipanti, ingresso delle vetture sportive, esposizione delle auto e ritrovo della community. Decine di auto sportive esposte lungo il grande prato, in una location direttamente sulle rive del lago."
+            description={`Apertura raduno alle ${lastCall2026.openingTime}: accoglienza dei partecipanti, ingresso delle vetture sportive, esposizione delle auto e ritrovo della community. Decine di auto sportive esposte lungo il grande prato, in una location direttamente sulle rive del lago.`}
           />
           <p className="mt-6 max-w-2xl text-ue-smoke text-sm">{vehicleApplication.note}</p>
           <div className="mt-10 max-w-xl">
@@ -185,9 +156,22 @@ export default function LastCallPage() {
 
       {/* Mappa */}
       <section className="container-ue py-24 border-t border-ue-line">
-        <SectionTitle eyebrow="Dove" title="Darsena 3.0" />
+        <SectionTitle eyebrow="Dove" title={lastCall2026.location.name} />
         <div className="mt-10">
           <MapSection />
+        </div>
+      </section>
+
+      {/* Partner e sponsor dell'evento */}
+      <section className="container-ue py-24 border-t border-ue-line">
+        <SectionTitle eyebrow="Un ringraziamento a" title="Partner e sponsor" align="center" />
+        <div className="mt-12 flex flex-wrap justify-center gap-x-12 gap-y-10">
+          {confirmedPartners.map((partner) => (
+            <PartnerLogo key={partner.name} {...partner} size="md" />
+          ))}
+          {confirmedSponsors.map((sponsor) => (
+            <PartnerLogo key={sponsor.name} {...sponsor} size="md" />
+          ))}
         </div>
       </section>
 

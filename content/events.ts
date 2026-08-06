@@ -38,7 +38,7 @@ export const events: EventItem[] = [
     name: "LAST CALL 2026",
     date: "2026-09-05",
     dateLabel: "Sabato 5 settembre 2026",
-    location: "Darsena 3.0 — Pisogne (BS)",
+    location: "Porto Turistico di Lovere (BG)",
     categories: ["automotive", "music", "food", "outdoor", "nightlife", "community"],
     status: "lista-aperta",
     image: "/images/hero/last-call-2026.jpg",

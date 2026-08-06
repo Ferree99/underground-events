@@ -61,9 +61,6 @@ export default function HomePage() {
             <Link href="/eventi/last-call-2026" className="btn-primary">
               Scopri LAST CALL
             </Link>
-            <Link href="/eventi/last-call-2026#spiedo" className="btn-secondary">
-              Prenota
-            </Link>
             <Link href="/eventi/last-call-2026#lista" className="btn-secondary">
               Mettiti in lista
             </Link>
@@ -102,14 +99,14 @@ export default function HomePage() {
         <SectionTitle eyebrow="Collaborazioni" title="Partner" />
         <div className="mt-12 flex flex-wrap gap-6">
           {confirmedPartners.map((partner) => (
-            <PartnerLogo key={partner.name} {...partner} size="sm" />
+            <PartnerLogo key={partner.name} {...partner} size="md" />
           ))}
         </div>
 
         <p className="mt-16 eyebrow">Sponsor</p>
         <div className="mt-6 flex flex-wrap gap-6">
           {confirmedSponsors.map((sponsor) => (
-            <PartnerLogo key={sponsor.name} {...sponsor} size="sm" />
+            <PartnerLogo key={sponsor.name} {...sponsor} size="md" />
           ))}
         </div>
       </section>
