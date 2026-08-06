@@ -76,22 +76,22 @@ export const lastCall2026 = {
   lineup: [
     {
       name: "MARCO DECIBEL",
-      photo: "[FOTO MARCO DECIBEL]",
-      social: "[DA DEFINIRE]",
+      photo: "/images/artists/marco-decibel.jpg",
+      social: "https://www.instagram.com/marcodecibel",
       bio: "[DA DEFINIRE]",
       setTime: "[DA DEFINIRE]",
     },
     {
       name: "PALAZ",
-      photo: "[FOTO PALAZ]",
-      social: "[DA DEFINIRE]",
+      photo: "/images/artists/palaz.jpg",
+      social: "https://www.instagram.com/federicopalazzoo/",
       bio: "[DA DEFINIRE]",
       setTime: "[DA DEFINIRE]",
     },
     {
       name: "MELLU",
-      photo: "[FOTO MELLU]",
-      social: "[DA DEFINIRE]",
+      photo: "/images/artists/mellu.jpg",
+      social: "https://www.instagram.com/melluofficial",
       bio: "[DA DEFINIRE]",
       setTime: "[DA DEFINIRE]",
     },
