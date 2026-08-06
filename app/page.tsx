@@ -4,11 +4,12 @@ import SectionTitle from "@/components/SectionTitle";
 import ServiceCard from "@/components/ServiceCard";
 import EventCard from "@/components/EventCard";
 import CallToAction from "@/components/CallToAction";
+import PartnerLogo from "@/components/PartnerLogo";
 import Countdown from "@/components/Countdown";
 import { homeServices } from "@/content/services";
 import { events } from "@/content/events";
 import { lastCall2026 } from "@/content/lastCall2026";
-import { confirmedPartners } from "@/content/partners";
+import { confirmedPartners, confirmedSponsors } from "@/content/partners";
 
 const workMethod = [
   { step: "Ascolto", text: "Raccogliamo l'idea, il contesto e gli obiettivi del progetto." },
@@ -96,19 +97,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Partner */}
+      {/* Partner e sponsor */}
       <section className="container-ue py-24 border-t border-ue-line">
         <SectionTitle eyebrow="Collaborazioni" title="Partner" />
         <div className="mt-12 flex flex-wrap gap-6">
           {confirmedPartners.map((partner) => (
-            <div key={partner.name} className="border border-ue-line px-8 py-6 text-center">
-              <p className="text-ue-smoke text-xs uppercase tracking-widest2">{partner.logo}</p>
-              <p className="mt-2 font-display uppercase font-semibold">{partner.name}</p>
-            </div>
+            <PartnerLogo key={partner.name} {...partner} size="sm" />
           ))}
-          <div className="border border-dashed border-ue-line px-8 py-6 text-center flex items-center text-ue-smoke text-xs uppercase tracking-widest2">
-            Prossimi partner e sponsor
-          </div>
+        </div>
+
+        <p className="mt-16 eyebrow">Sponsor</p>
+        <div className="mt-6 flex flex-wrap gap-6">
+          {confirmedSponsors.map((sponsor) => (
+            <PartnerLogo key={sponsor.name} {...sponsor} size="sm" />
+          ))}
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SectionTitle from "@/components/SectionTitle";
 import CallToAction from "@/components/CallToAction";
+import PartnerLogo from "@/components/PartnerLogo";
 import { partnerCategories } from "@/content/partners";
 
 export const metadata: Metadata = { title: "Partner" };
@@ -23,11 +24,7 @@ export default function PartnerPage() {
             {cat.entries.length > 0 ? (
               <div className="flex flex-wrap gap-6">
                 {cat.entries.map((entry) => (
-                  <div key={entry.name} className="border border-ue-line px-8 py-6 text-center max-w-sm">
-                    <p className="text-ue-smoke text-xs uppercase tracking-widest2">{entry.logo}</p>
-                    <p className="mt-2 font-display uppercase font-semibold">{entry.name}</p>
-                    <p className="mt-2 text-sm text-ue-smoke">{entry.description}</p>
-                  </div>
+                  <PartnerLogo key={entry.name} {...entry} />
                 ))}
               </div>
             ) : (

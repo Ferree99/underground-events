@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import LastCallHero from "@/components/LastCallHero";
+import Logo from "@/components/Logo";
 import SectionTitle from "@/components/SectionTitle";
 import Timeline from "@/components/Timeline";
 import ArtistCard from "@/components/ArtistCard";
@@ -57,6 +59,18 @@ export default function LastCallPage() {
       <section className="container-ue py-24">
         <p className="text-lg md:text-2xl leading-relaxed max-w-3xl">{lastCall2026.description.main}</p>
         <p className="mt-6 text-ue-smoke max-w-3xl leading-relaxed">{lastCall2026.description.secondary}</p>
+
+        <div className="mt-10 flex flex-wrap items-center gap-6 border border-ue-line bg-ue-ink px-6 py-5 max-w-2xl">
+          <p className="eyebrow shrink-0">Organizzato da</p>
+          <div className="flex flex-wrap items-center gap-6">
+            <Logo variant="horizontal" className="h-8" />
+            <span className="text-ue-smoke text-lg">×</span>
+            <div className="relative h-10 w-32">
+              <Image src="/images/partners/street-car-therapy.png" alt="Street Car Therapy" fill className="object-contain object-left" />
+            </div>
+          </div>
+          <p className="w-full text-sm text-ue-smoke mt-1">{lastCall2026.collaborationText}</p>
+        </div>
       </section>
 
       {/* Cosa ti aspetta */}
