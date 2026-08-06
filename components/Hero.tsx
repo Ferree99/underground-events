@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ScrollIndicator from "./ScrollIndicator";
 import LogoIcon from "./LogoIcon";
 
 const DARK = "#141414";
@@ -107,7 +106,13 @@ export default function Hero() {
 
     function resize() {
       if (!canvas) return;
-      canvas.width = window.innerWidth;
+      // Su mobile la barra degli indirizzi cambia l'altezza della finestra
+      // durante lo scroll: ridimensionare il canvas in quel momento lo
+      // svuoterebbe di colpo (flash del fumo che "riparte"). Aggiorniamo
+      // solo se la larghezza cambia davvero, o al primo avvio.
+      const newWidth = window.innerWidth;
+      if (canvas.width === newWidth && canvas.height > 0) return;
+      canvas.width = newWidth;
       canvas.height = window.innerHeight;
     }
     resize();
@@ -132,6 +137,10 @@ export default function Hero() {
 
     if (!reducedMotion) {
       gsap.registerPlugin(ScrollTrigger);
+      // Su mobile, la comparsa/scomparsa della barra degli indirizzi cambia
+      // l'altezza della finestra durante lo scroll: senza questa opzione
+      // ScrollTrigger ricalcola tutto in quel momento, causando scatti.
+      ScrollTrigger.config({ ignoreMobileResize: true });
 
       ctxGsap = gsap.context(() => {
         if (wrapperRef.current) {
@@ -212,7 +221,7 @@ export default function Hero() {
 
   return (
     <section ref={wrapperRef} className="relative bg-ue-black" style={{ minHeight: "100vh" }}>
-      <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
+      <div className="sticky top-0 flex h-[100dvh] items-center justify-center overflow-hidden">
         <canvas
           ref={canvasRef}
           aria-hidden="true"
@@ -296,8 +305,15 @@ export default function Hero() {
           </div>
         </div>
 
-        <div ref={scrollhintRef} className="absolute z-10">
-          <ScrollIndicator />
+        <div
+          ref={scrollhintRef}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+        >
+          <span className="text-[10px] uppercase tracking-widest2 text-ue-white">Scorri</span>
+          <span
+            className="h-10 w-px bg-gradient-to-b from-ue-red to-transparent motion-safe:animate-pulse"
+            aria-hidden="true"
+          />
         </div>
       </div>
     </section>
