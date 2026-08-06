@@ -96,13 +96,12 @@ export const lastCall2026 = {
 
   heroVideo: "[VIDEO HERO LAST CALL]",
   gallery: [
-    "[FOTO DARSENA 3.0]",
-    "[FOTO AUTO SPORTIVE]",
-    "[FOTO TRAMONTO SUL LAGO]",
-    "[FOTO FOOD AREA]",
-    "[FOTO DRINK AREA]",
-    "[FOTO BEACH VOLLEY]",
-    "[FOTO BEER PONG]",
+    { label: "Porto", src: "/images/gallery/last-call-2026/porto.jpg" },
+    { label: "Auto sportive", src: "/images/gallery/last-call-2026/auto-sportive.jpg" },
+    { label: "Tramonto sul lago", src: "/images/gallery/last-call-2026/tramonto-lago.jpg" },
+    { label: "Food area", src: "/images/gallery/last-call-2026/food-area.jpg" },
+    { label: "Drink area", src: "/images/gallery/last-call-2026/drink-area.jpg" },
+    { label: "Beer pong", src: "/images/gallery/last-call-2026/beer-pong.jpg" },
   ],
 
   status: {
