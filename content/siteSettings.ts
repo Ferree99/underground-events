@@ -14,7 +14,8 @@ export const siteSettings = {
   contact: {
     email: "info@undergroundevents.it",
     phone: "[DA DEFINIRE]",
-    instagram: "[DA DEFINIRE]",
+    instagram: "@undergroundevents_official",
+    instagramUrl: "https://www.instagram.com/undergroundevents_official/",
     tiktok: "[DA DEFINIRE]",
     address: "[DA DEFINIRE]",
     vatNumber: "[DA DEFINIRE]",

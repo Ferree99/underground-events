@@ -23,7 +23,18 @@ export default function ContattiPage() {
           </div>
           <div>
             <p className="eyebrow mb-1">Instagram</p>
-            <p>{siteSettings.contact.instagram}</p>
+            {siteSettings.contact.instagramUrl ? (
+              <a
+                href={siteSettings.contact.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-ue-red hover:underline"
+              >
+                {siteSettings.contact.instagram}
+              </a>
+            ) : (
+              <p>{siteSettings.contact.instagram}</p>
+            )}
           </div>
           <div>
             <p className="eyebrow mb-1">TikTok</p>
