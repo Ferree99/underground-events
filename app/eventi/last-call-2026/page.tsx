@@ -142,13 +142,19 @@ export default function LastCallPage() {
       {/* Galleria */}
       <section className="container-ue py-24 border-t border-ue-line">
         <SectionTitle eyebrow="Media" title="Galleria" />
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="mt-10 grid grid-cols-2 md:grid-cols-3 gap-4">
           {lastCall2026.gallery.map((item) => (
-            <div
-              key={item}
-              className="aspect-square border border-ue-line flex items-center justify-center text-center text-ue-smoke text-[10px] uppercase tracking-widest2 p-2"
-            >
-              {item}
+            <div key={item.label} className="relative aspect-square border border-ue-line overflow-hidden group">
+              <Image
+                src={item.src}
+                alt={item.label}
+                fill
+                sizes="(min-width: 768px) 33vw, 50vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <span className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-ue-black/80 to-transparent px-3 py-2 text-[10px] uppercase tracking-widest2 text-ue-white">
+                {item.label}
+              </span>
             </div>
           ))}
         </div>
