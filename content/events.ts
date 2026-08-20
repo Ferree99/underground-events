@@ -36,8 +36,8 @@ export const events: EventItem[] = [
   {
     slug: "last-call-2026",
     name: "LAST CALL 2026",
-    date: "2026-09-05",
-    dateLabel: "Sabato 5 settembre 2026",
+    date: "2026-09-26",
+    dateLabel: "Sabato 26 settembre 2026",
     location: "Porto Turistico di Lovere (BG)",
     categories: ["automotive", "music", "food", "outdoor", "nightlife", "community"],
     status: "lista-aperta",

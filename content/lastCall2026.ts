@@ -6,8 +6,8 @@
 export const lastCall2026 = {
   name: "LAST CALL 2026",
   claim: "L'ultima chiamata dell'estate",
-  date: "2026-09-05",
-  dateLabel: "Sabato 5 settembre 2026",
+  date: "2026-09-26",
+  dateLabel: "Sabato 26 settembre 2026",
   openingTime: "17:00",
   closingTime: "00:00", // mezzanotte
   location: {
