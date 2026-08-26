@@ -22,6 +22,7 @@ export const beerPongTournament = {
 
 // Elenco dei PR tra cui scegliere nel modulo "Mettiti in lista".
 export const guestListPrOptions = ["Mattia Ghidini", "Greta Contessi", "Silvio Baisini", "Omar Akkaf"];
+export const guestListNoPrOption = "Nessun PR / mi iscrivo da solo";
 
 export const venueInfo = {
   parking:
