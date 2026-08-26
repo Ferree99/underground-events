@@ -28,7 +28,7 @@ npm run start
 ```
 app/                    → pagine (routing basato su file, App Router)
 components/             → componenti riutilizzabili
-components/forms/       → moduli (lista, candidatura auto, preventivo, contatti)
+components/forms/       → moduli (lista, beer pong, preventivo, contatti)
 content/                → TUTTI i dati modificabili, separati dai componenti
 public/images/          → asset statici (logo, favicon, immagini, OG)
 public/__forms.html     → form "ombra" statico per il rilevamento di Netlify Forms
@@ -48,7 +48,7 @@ Non serve toccare i componenti: i testi si modificano nei file dentro `content/`
 | `content/events.ts` | Archivio eventi (aggiungi qui i prossimi eventi) |
 | `content/lastCall2026.ts` | Tutti i dati ufficiali di LAST CALL 2026 |
 | `content/drinkPromotions.ts` | Promo drink (orari, prezzi) |
-| `content/bookingSettings.ts` | Dati per Beer Pong/giochi e per la candidatura auto **non presenti nel PDF originale** — sostituisci ogni `[DA DEFINIRE]` |
+| `content/bookingSettings.ts` | Elenco PR per la lista, dati del torneo Beer Pong |
 | `content/partners.ts` | Partner, sponsor, media partner, fornitori |
 | `content/team.ts` | Team (vuoto: nessun nome era stato fornito) |
 | `content/faq.ts` | FAQ (vuoto: nessuna FAQ era stata fornita) |
@@ -106,7 +106,7 @@ Il file `public/__forms.html` è ciò che permette a Netlify di "vedere" questi 
 
 ## 7. Database (Supabase) per i moduli di prenotazione
 
-I moduli con **posti limitati e stato di conferma** — lista evento/promo drink, candidatura auto — scrivono in un vero database (Postgres via Supabase), non in Netlify Forms. Questo permette di:
+I moduli con **posti limitati e stato di conferma** — lista evento/promo drink, iscrizione Beer Pong — scrivono in un vero database (Postgres via Supabase), non in Netlify Forms. Questo permette di:
 
 - contare automaticamente i posti/persone/squadre già occupati;
 - passare in automatico le nuove richieste a **"lista d'attesa"** quando i posti configurati sono esauriti;
@@ -132,8 +132,8 @@ Nella tabella `capacity_settings` (Supabase → Table Editor) trovi una riga per
 
 | key | a cosa corrisponde |
 |---|---|
-| `lista-evento` | somma delle persone in lista |
-| `auto-candidature` | numero di auto candidate |
+| `lista-evento` | numero di persone in lista (ognuna si registra singolarmente) |
+| `beerpong-squadre` | numero di squadre iscritte al Beer Pong |
 
 Il campo `capacity` è vuoto (`null`) di default, cioè **nessun limite**. Per impostare un tetto, modifica direttamente il valore da Supabase — ad esempio per limitare la lista a 300 persone:
 
@@ -150,13 +150,34 @@ Supabase → **Table Editor** mostra ogni tabella come un foglio di calcolo: puo
 ### 7.5 Cosa NON è ancora incluso
 
 - Non viene inviata automaticamente un'email di conferma alla persona che prenota (il sito mostra solo il messaggio a schermo con il codice identificativo). Se vuoi anche l'email automatica, si può aggiungere in un secondo momento con un servizio come Resend o con le funzioni email di Supabase.
-- I valori mostrati sulle pagine (candidatura auto, in `content/bookingSettings.ts`) restano testo statico da aggiornare a mano: non sono ancora collegati al database. Il database gestisce solo il conteggio dei posti, non i testi descrittivi.
+- I testi mostrati sulle pagine (in `content/bookingSettings.ts`) restano statici da aggiornare a mano: non sono ancora collegati al database. Il database gestisce solo il conteggio dei posti, non i testi descrittivi.
 
 ---
 
+## 8. Statistiche del sito (Google Analytics)
 
+Il sito è già predisposto per Google Analytics (GA4), collegato al banner cookie esistente: parte
+**solo** se l'utente accetta i cookie di analisi, e **solo** se hai configurato un ID di misurazione.
+Senza questi due requisiti, non viene caricato nulla — niente script, niente cookie.
 
-## 8. Dati ancora mancanti (da completare prima della pubblicazione)
+1. Crea una proprietà su [analytics.google.com](https://analytics.google.com) (gratuito).
+2. Vai su **Amministrazione → Flussi di dati** → crea/apri il flusso web del tuo dominio → copia
+   l'**ID misurazione** (formato `G-XXXXXXXXXX`).
+3. Su Netlify: **Site configuration → Environment variables** → aggiungi `NEXT_PUBLIC_GA_MEASUREMENT_ID`
+   con quel valore, poi rifai il deploy.
+4. Da quel momento, ogni visitatore che accetta i cookie di analisi viene conteggiato. Consulta i dati
+   direttamente su analytics.google.com (sezione "Report" → "In tempo reale" o "Coinvolgimento").
+
+**Importante**: nessuno strumento di analytics può mostrare dati di visite avvenute *prima* di essere
+attivato — si parte a contare da zero da quando lo colleghi, non retroattivamente.
+
+Se in alternativa preferisci **Netlify Analytics** (9€/mese, senza bisogno di codice né di consenso
+cookie perché non traccia con cookie): si attiva direttamente dal pannello Netlify → sezione
+"Analytics" del tuo sito, nessuna modifica al codice necessaria.
+
+---
+
+## 9. Dati ancora mancanti (da completare prima della pubblicazione)
 
 - Regole di accesso, criteri di selezione, costo, registrazione, orario consigliato, categorie ammesse
   e capienza per l'area automotive (in `content/bookingSettings.ts`, marcati `[DA DEFINIRE]`)
@@ -172,7 +193,7 @@ Supabase → **Table Editor** mostra ogni tabella come un foglio di calcolo: puo
 
 ---
 
-## 9. Pubblicazione su Netlify
+## 10. Pubblicazione su Netlify
 
 1. Crea un repository Git con questo progetto e caricalo su GitHub/GitLab.
 2. Su [netlify.com](https://www.netlify.com) → "Add new site" → "Import an existing project".
@@ -189,7 +210,7 @@ Supabase → **Table Editor** mostra ogni tabella come un foglio di calcolo: puo
 
 ---
 
-## 10. Checklist prima della pubblicazione
+## 11. Checklist prima della pubblicazione
 
 - [ ] Sostituiti tutti i valori `[DA DEFINIRE]` in `content/bookingSettings.ts` e `content/siteSettings.ts`
 - [ ] Caricati gli asset reali del logo in `public/images/logo/` e aggiornato `components/Logo.tsx`
@@ -200,6 +221,7 @@ Supabase → **Table Editor** mostra ogni tabella come un foglio di calcolo: puo
 - [ ] Posti configurati in `capacity_settings` (o lasciati illimitati volontariamente)
 - [ ] Notifiche email attivate per i form "contatti" e "preventivo" nel pannello Netlify
 - [ ] `siteSettings.siteUrl` aggiornato con il dominio definitivo
+- [ ] (facoltativo) Google Analytics collegato: `NEXT_PUBLIC_GA_MEASUREMENT_ID` impostato su Netlify
 - [ ] Verifica responsive su mobile, tablet, desktop
 - [ ] Verifica navigazione da tastiera e focus visibili
 - [ ] Verifica tutti i link interni (menu, footer, CTA)
@@ -208,7 +230,7 @@ Supabase → **Table Editor** mostra ogni tabella come un foglio di calcolo: puo
 
 ---
 
-## 11. Cosa manca ancora in questa prima versione del progetto
+## 12. Cosa manca ancora in questa prima versione del progetto
 
 Per restare fedele al brief senza inventare contenuti, in questa prima consegna sono stati completati:
 Home, LAST CALL 2026, Chi siamo, Servizi, Eventi (archivio con ricerca/filtri), Partner, Contatti,
