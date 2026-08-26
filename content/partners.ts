@@ -4,6 +4,7 @@ export type Partner = {
   name: string;
   logo: string;
   description?: string;
+  instagramUrl?: string;
 };
 
 // Partner confermati (collaborazioni dirette sugli eventi)
@@ -12,6 +13,7 @@ export const confirmedPartners: Partner[] = [
     name: "Street Car Therapy",
     logo: "/images/partners/street-car-therapy.png",
     description: "Una collaborazione che unisce il mondo delle auto sportive alla musica e al divertimento.",
+    instagramUrl: "https://www.instagram.com/street_car_therapy/",
   },
   {
     name: "Distretto 11",
@@ -23,19 +25,39 @@ export const confirmedPartners: Partner[] = [
   },
 ];
 
-// Sponsor confermati
+// Sponsor confermati.
 export const confirmedSponsors: Partner[] = [
+  {
+    name: "Autolavaggio",
+    logo: "/images/partners/autolavaggio.png",
+  },
   {
     name: "Vanilla Nail Salon",
     logo: "/images/partners/vanilla-nail-salon.png",
+  },
+  {
+    name: "Lion Meccanica",
+    logo: "/images/partners/lion-meccanica.png",
+  },
+  {
+    name: "Lake 15",
+    logo: "/images/partners/lake-15.png",
+  },
+  {
+    name: "Trattoria Aurora",
+    logo: "/images/partners/trattoria-aurora.png",
+  },
+  {
+    name: "22Room",
+    logo: "/images/partners/22room.png",
   },
   {
     name: "Zanardini Minuterie Metalliche",
     logo: "/images/partners/zanardini.png",
   },
   {
-    name: "Area Industriale",
-    logo: "/images/partners/area-industriale.png",
+    name: "Barber Costa Volpino",
+    logo: "/images/partners/barber-costa-volpino.png",
   },
 ];
 

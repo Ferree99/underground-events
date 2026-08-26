@@ -4,30 +4,24 @@
 // Ogni valore "[DA DEFINIRE]" deve essere sostituito dall'organizzazione
 // prima della pubblicazione. Nessuno di questi dati è stato inventato.
 //
-// Nota: spiedo e torneo Beach Volley sono stati tolti dall'evento — le
-// relative impostazioni sono state rimosse da questo file.
+// Nota: spiedo e torneo Beach Volley sono stati tolti dall'evento. La
+// candidatura auto non passa più da un modulo sul sito: chi vuole portare
+// la propria auto scrive direttamente in direct a Street Car Therapy.
 
-export const beerPongAndGames = {
-  title: "Beer Pong, giochi, sfide e premi",
-  note:
-    "Modalità di iscrizione, regolamento, premi, numero di partecipanti, formula ed eventuali costi non sono ancora stati definiti dall'organizzazione.",
-  rulesButtonLabel: "Scopri le regole",
-  rulesAvailable: false, // il pulsante resta disattivato finché il regolamento non è pubblicato
+export const beerPongTournament = {
+  title: "Iscrivi la tua squadra",
+  intro:
+    "Squadre da 2 giocatori: basta che si iscriva una sola persona per squadra, l'altro componente arriva con lei il giorno dell'evento.",
+  time: "17:00",
+  fee: "20 € a coppia",
+  feeIncludes: "Il beveraggio per giocare incluso per tutte le partite",
+  prizes: "Premio finale per le prime 3 squadre classificate",
+  afterSubmitMessage:
+    "Iscrizione ricevuta. La partecipazione sarà confermata dall'organizzazione dopo la verifica dei posti disponibili.",
 };
 
-export const vehicleApplication = {
-  title: "Candida la tua auto",
-  note:
-    "Le modalità definitive di partecipazione (criteri di selezione, costo, registrazione, orario di arrivo, regole di accesso, categorie ammesse, capienza) devono ancora essere approvate dall'organizzazione.",
-  criteriaSelection: "[DA DEFINIRE]",
-  participationCost: "[DA DEFINIRE]",
-  registrationMethod: "[DA DEFINIRE]",
-  recommendedArrivalTime: "[DA DEFINIRE]",
-  accessRules: "[DA DEFINIRE]",
-  admittedCategories: "[DA DEFINIRE]",
-  capacity: "[DA DEFINIRE]",
-  automotiveReferent: "[DA DEFINIRE]",
-};
+// Elenco dei PR tra cui scegliere nel modulo "Mettiti in lista".
+export const guestListPrOptions = ["Mattia Ghidini", "Greta Contessi", "Silvio Baisini", "Omar Akkaf"];
 
 export const venueInfo = {
   parking:

@@ -8,8 +8,8 @@ export const lastCall2026 = {
   claim: "L'ultima chiamata dell'estate",
   date: "2026-09-26",
   dateLabel: "Sabato 26 settembre 2026",
-  openingTime: "17:00",
-  closingTime: "00:00", // mezzanotte
+  openingTime: "16:00",
+  closingTime: "01:00",
   location: {
     name: "Porto Turistico di Lovere",
     address: "Via del Cantiere, 6",
@@ -23,45 +23,47 @@ export const lastCall2026 = {
 
   description: {
     main:
-      "Una giornata immersa in una location unica, direttamente sulle rive del lago. Un grande prato ospiterà decine di auto sportive esposte lungo tutta l'area, creando uno scenario spettacolare che accompagnerà l'intera giornata. Dal tardo pomeriggio fino a mezzanotte troverai esposizione di auto sportive, DJ set, Food Area, Drink Area, attività, giochi, tramonto sul lago e party finale.",
+      "Una giornata immersa in una location unica, direttamente sulle rive del lago. Un grande prato ospiterà decine di auto sportive esposte lungo tutta l'area, creando uno scenario spettacolare che accompagnerà l'intera giornata. Dalle 16:00 fino a notte fonda troverai esposizione di auto sportive, Beer Pong, DJ set, Food Area, Drink Area, tramonto sul lago e party finale.",
     secondary:
-      "LAST CALL unisce il mondo delle auto sportive alla musica e al divertimento. Una giornata da vivere insieme, dal raduno del tardo pomeriggio fino al party finale di mezzanotte.",
+      "LAST CALL unisce il mondo delle auto sportive alla musica e al divertimento. Una giornata da vivere insieme, dal raduno del tardo pomeriggio fino al party finale.",
   },
 
   whatToExpect: [
     "Auto sportive",
+    "Beer Pong",
     "DJ set",
     "Food Area",
     "Drink Area",
-    "Beer Pong",
-    "Attività e giochi",
-    "Sfide",
-    "Premi",
     "Tramonto sul lago",
     "Party finale",
   ],
 
-  // Programma ufficiale — non aggiungere orari non presenti nel documento.
+  // Programma ufficiale.
   schedule: [
     {
-      time: "17:00",
-      title: "Apertura raduno",
-      items: [
-        "Accoglienza dei partecipanti",
-        "Ingresso delle vetture sportive",
-        "Esposizione delle auto",
-        "Ritrovo della community",
-      ],
+      time: "16:00",
+      title: "Apertura",
+      items: ["Ingresso delle vetture sportive", "Esposizione delle auto", "Ritrovo della community"],
     },
     {
-      time: "[DA DEFINIRE]",
-      title: "Game Time",
-      items: ["Beer Pong", "Giochi", "Sfide", "Premi"],
+      time: "17:00",
+      title: "Beer Pong",
+      items: ["Inizio tornei Beer Pong"],
     },
     {
       time: "18:00",
-      title: "Last Call Party",
-      items: ["DJ set", "Drink", "Musica", "Party fino a mezzanotte"],
+      title: "DJ Set",
+      items: ["Inizio DJ set", "Musica dal vivo"],
+    },
+    {
+      time: "00:00",
+      title: "Fine musica",
+      items: [],
+    },
+    {
+      time: "01:00",
+      title: "Fine evento",
+      items: [],
     },
   ],
 
@@ -79,13 +81,6 @@ export const lastCall2026 = {
       name: "PALAZ",
       photo: "/images/artists/palaz.jpg",
       social: "https://www.instagram.com/federicopalazzoo/",
-      bio: "[DA DEFINIRE]",
-      setTime: "[DA DEFINIRE]",
-    },
-    {
-      name: "MELLU",
-      photo: "/images/artists/mellu.jpg",
-      social: "https://www.instagram.com/melluofficial",
       bio: "[DA DEFINIRE]",
       setTime: "[DA DEFINIRE]",
     },
