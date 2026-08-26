@@ -4,8 +4,6 @@ export default function ArtistCard({
   name,
   photo,
   social,
-  bio,
-  setTime,
 }: {
   name: string;
   photo: string;
@@ -34,7 +32,7 @@ export default function ArtistCard({
       <div className="p-6">
         <h3 className="font-display font-bold uppercase text-xl">{name}</h3>
         {hasRealSocial ? (
-          <a
+          
             href={social}
             target="_blank"
             rel="noopener noreferrer"
