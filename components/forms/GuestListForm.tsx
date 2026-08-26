@@ -1,9 +1,10 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { TextField, CheckboxField } from "./FormField";
+import { TextField, SelectField, CheckboxField } from "./FormField";
 import { FormSuccess, FormError } from "./FormStatus";
 import { drinkPromotions } from "@/content/drinkPromotions";
+import { guestListPrOptions } from "@/content/bookingSettings";
 
 const WAITLIST_MESSAGE =
   "I posti in lista sono attualmente esauriti: la tua richiesta è stata registrata in lista d'attesa. Ti avviseremo se si libera posto.";
@@ -23,7 +24,7 @@ export default function GuestListForm() {
       cognome: form.get("cognome"),
       email: form.get("email"),
       telefono: form.get("telefono"),
-      partecipanti: form.get("partecipanti"),
+      pr: form.get("pr"),
       data_nascita: form.get("data_nascita"),
       privacy: form.get("privacy") === "on",
       operative: form.get("operative") === "on",
@@ -68,7 +69,7 @@ export default function GuestListForm() {
         <TextField label="Telefono" name="telefono" type="tel" required autoComplete="tel" />
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
-        <TextField label="Numero di partecipanti" name="partecipanti" type="number" min={1} required />
+        <SelectField label="Lista / PR" name="pr" required options={guestListPrOptions} placeholder="Seleziona il PR" />
         <TextField label="Data di nascita" name="data_nascita" type="date" required />
       </div>
 
