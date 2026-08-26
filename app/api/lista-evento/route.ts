@@ -5,16 +5,18 @@ import { generateBookingCode, checkCapacity } from "@/lib/bookingHelpers";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { nome, cognome, email, telefono, partecipanti, data_nascita, privacy, operative, marketing } = body;
+    const { nome, cognome, email, telefono, pr, data_nascita, privacy, operative, marketing } = body;
 
-    if (!nome || !cognome || !email || !telefono || !partecipanti || !privacy || !operative) {
+    if (!nome || !cognome || !email || !telefono || !pr || !privacy || !operative) {
       return NextResponse.json({ error: "Campi obbligatori mancanti." }, { status: 400 });
     }
 
     const supabase = getSupabaseServerClient();
-    const people = Number(partecipanti) || 1;
 
-    const { status } = await checkCapacity(supabase, "lista-evento", "guest_list_entries", "partecipanti", people);
+    // Ogni richiesta è ora una singola persona (niente più "numero di
+    // partecipanti": ognuno si registra singolarmente), quindi contiamo le
+    // righe invece di sommare una colonna.
+    const { status } = await checkCapacity(supabase, "lista-evento", "guest_list_entries", null, 1);
     const code = generateBookingCode("LISTA");
 
     const { error } = await supabase.from("guest_list_entries").insert({
@@ -23,7 +25,8 @@ export async function POST(request: Request) {
       cognome,
       email,
       telefono,
-      partecipanti: people,
+      pr,
+      partecipanti: 1,
       data_nascita: data_nascita || null,
       consenso_marketing: !!marketing,
       status,
