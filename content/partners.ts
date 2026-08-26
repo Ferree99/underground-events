@@ -7,7 +7,7 @@ export type Partner = {
   instagramUrl?: string;
 };
 
-// Partner confermati (collaborazioni dirette sugli eventi)
+// Partner ufficiale dell'evento (unico)
 export const confirmedPartners: Partner[] = [
   {
     name: "Street Car Therapy",
@@ -15,17 +15,9 @@ export const confirmedPartners: Partner[] = [
     description: "Una collaborazione che unisce il mondo delle auto sportive alla musica e al divertimento.",
     instagramUrl: "https://www.instagram.com/street_car_therapy/",
   },
-  {
-    name: "Distretto 11",
-    logo: "/images/partners/distretto-11.png",
-  },
-  {
-    name: "Honest",
-    logo: "/images/partners/honest.png",
-  },
 ];
 
-// Sponsor confermati.
+// Sponsor confermati — solo questi 8, tutti gli altri sono stati tolti.
 export const confirmedSponsors: Partner[] = [
   {
     name: "Autolavaggio",
