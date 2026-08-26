@@ -43,7 +43,12 @@ export const lastCall2026 = {
     {
       time: "16:00",
       title: "Apertura",
-      items: ["Ingresso delle vetture sportive", "Esposizione delle auto", "Ritrovo della community"],
+      items: [
+        "Accredito per chi è in lista",
+        "Ingresso delle vetture sportive",
+        "Esposizione delle auto",
+        "Ritrovo della community",
+      ],
     },
     {
       time: "17:00",
