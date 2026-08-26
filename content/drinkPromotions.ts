@@ -4,7 +4,7 @@
 
 export const drinkPromotions = {
   title: "Mettiti in lista",
-  eligibilityNote: "Le promozioni della serata saranno specificate direttamente in loco.",
+  eligibilityNote: "Chi è in lista dovrà accreditarsi all'info point il giorno dell'evento e ritirare il proprio bracciale, le promozioni dell'evento saranno specificate direttamente in loco.",
   afterSubmitMessage:
     "Richiesta ricevuta. Riceverai la conferma e le istruzioni all'indirizzo indicato.",
 };
