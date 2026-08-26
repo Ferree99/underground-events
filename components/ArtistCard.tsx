@@ -8,6 +8,8 @@ export default function ArtistCard({
   name: string;
   photo: string;
   social: string;
+  bio: string;
+  setTime: string;
 }) {
   const hasRealPhoto = photo.startsWith("/");
   const hasRealSocial = social.startsWith("http");
@@ -32,7 +34,7 @@ export default function ArtistCard({
       <div className="p-6">
         <h3 className="font-display font-bold uppercase text-xl">{name}</h3>
         {hasRealSocial ? (
-          
+          <a
             href={social}
             target="_blank"
             rel="noopener noreferrer"
