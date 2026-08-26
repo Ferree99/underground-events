@@ -4,7 +4,6 @@ import LastCallHero from "@/components/LastCallHero";
 import SectionTitle from "@/components/SectionTitle";
 import Timeline from "@/components/Timeline";
 import ArtistCard from "@/components/ArtistCard";
-import PromoDrinkCard from "@/components/PromoDrinkCard";
 import MapSection from "@/components/MapSection";
 import GuestListForm from "@/components/forms/GuestListForm";
 import BeerPongForm from "@/components/forms/BeerPongForm";
@@ -157,20 +156,13 @@ export default function LastCallPage() {
         </div>
       </section>
 
-      {/* Promo drink + lista */}
+      {/* Lista */}
       <section id="lista" className="border-t border-ue-line scroll-mt-24">
         <div className="container-ue py-24">
-          <SectionTitle eyebrow="Promo" title={drinkPromotions.title} />
+          <SectionTitle eyebrow="Lista" title={drinkPromotions.title} />
           <p className="mt-4 text-ue-red text-sm uppercase tracking-wide">{drinkPromotions.eligibilityNote}</p>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 max-w-2xl">
-            {drinkPromotions.slots.map((slot) => (
-              <PromoDrinkCard key={slot.timeRange} {...slot} />
-            ))}
-          </div>
-
           <div className="mt-12 max-w-xl">
-            <h3 className="font-display font-bold uppercase text-xl mb-6">Mettiti in lista</h3>
             <GuestListForm />
           </div>
         </div>
