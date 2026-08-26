@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import getSupabaseServerClient from "@/lib/supabaseServer";
 import { generateBookingCode, checkCapacity } from "@/lib/bookingHelpers";
+import { sendConfirmationEmail } from "@/lib/sendEmail";
+import { lastCall2026 } from "@/content/lastCall2026";
+import { beerPongTournament } from "@/content/bookingSettings";
 
 export async function POST(request: Request) {
   try {
@@ -28,6 +31,27 @@ export async function POST(request: Request) {
     });
 
     if (error) throw error;
+
+    const waitlisted = status === "lista-attesa";
+    await sendConfirmationEmail({
+      to: email,
+      toName: `${nome} ${cognome}`,
+      subject: waitlisted
+        ? `Beer Pong ${lastCall2026.name} — sei in lista d'attesa`
+        : `Beer Pong ${lastCall2026.name} — squadra iscritta!`,
+      html: `
+        <p>Ciao ${nome},</p>
+        ${
+          waitlisted
+            ? `<p>Le squadre disponibili per il Beer Pong sono al momento esaurite: la tua iscrizione è stata registrata in lista d'attesa.</p>`
+            : `<p>La tua squadra per il torneo Beer Pong di <strong>${lastCall2026.name}</strong> è stata iscritta con successo.</p>`
+        }
+        <p>Codice della tua iscrizione: <strong>${code}</strong></p>
+        <p>Quota: ${beerPongTournament.fee} — ${beerPongTournament.feeIncludes}</p>
+        <p>${lastCall2026.dateLabel} — ${lastCall2026.location.name}, ore ${beerPongTournament.time}</p>
+        <p>A presto,<br/>Underground Events</p>
+      `,
+    });
 
     return NextResponse.json({ code, status });
   } catch (err) {
