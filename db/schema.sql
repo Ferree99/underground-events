@@ -4,16 +4,18 @@
 -- Da eseguire una sola volta in Supabase: Dashboard → SQL Editor → incolla
 -- tutto questo file → Run.
 --
--- Copre SOLO i moduli con posti limitati e stato di conferma:
---   - lista evento / promo drink
---   - candidatura auto (area automotive)
+-- Copre i moduli con posti limitati e stato di conferma:
+--   - lista evento / promo drink (con PR di riferimento)
+--   - iscrizione Beer Pong (squadre da 2, si iscrive 1 persona)
 --
 -- Contatti e Preventivo NON passano da qui: vanno via email tramite
 -- Netlify Forms (vedi README, sezione "Contatti e Preventivo via email").
 --
--- Nota: spiedo e torneo Beach Volley erano previsti inizialmente ma sono
--- stati tolti dall'evento — le relative tabelle sono state rimosse anche
--- dal database live (nessun dato presente al momento della rimozione).
+-- La candidatura auto non passa più da un modulo sul sito: chi vuole
+-- portare la propria auto scrive in direct a Street Car Therapy su
+-- Instagram — la tabella "vehicle_applications" è stata rimossa.
+-- Spiedo e torneo Beach Volley erano previsti inizialmente ma sono stati
+-- tolti dall'evento.
 -- ============================================================================
 
 -- Stato condiviso da tutte le richieste, coerente con quello già usato nella
@@ -33,7 +35,7 @@ create type booking_status as enum (
 -- capacity = null significa "nessun limite".
 -- ----------------------------------------------------------------------------
 create table capacity_settings (
-  key text primary key,           -- 'lista-evento' | 'auto-candidature'
+  key text primary key,           -- 'lista-evento' | 'beerpong-squadre'
   label text not null,
   capacity integer,               -- null = illimitato
   updated_at timestamptz not null default now()
@@ -41,12 +43,14 @@ create table capacity_settings (
 
 insert into capacity_settings (key, label, capacity) values
   ('lista-evento', 'Lista evento (persone)', null),
-  ('auto-candidature', 'Candidature area automotive (auto)', null);
+  ('beerpong-squadre', 'Squadre Beer Pong', null);
 -- Sostituisci "null" con il numero reale di posti quando lo conoscete,
 -- ad es.: update capacity_settings set capacity = 300 where key = 'lista-evento';
 
 -- ----------------------------------------------------------------------------
--- Lista evento + promo drink
+-- Lista evento + promo drink. Ogni riga è una singola persona (non più un
+-- numero di partecipanti): ognuno si registra individualmente, indicando
+-- il PR/lista di riferimento.
 -- ----------------------------------------------------------------------------
 create table guest_list_entries (
   id uuid primary key default gen_random_uuid(),
@@ -56,6 +60,7 @@ create table guest_list_entries (
   cognome text not null,
   email text not null,
   telefono text not null,
+  pr text,                           -- PR/lista scelto nel modulo
   partecipanti integer not null default 1,
   data_nascita date,
   consenso_marketing boolean not null default false,
@@ -64,22 +69,17 @@ create table guest_list_entries (
 );
 
 -- ----------------------------------------------------------------------------
--- Candidatura auto (area automotive)
+-- Iscrizione Beer Pong. Squadre da 2 giocatori: si iscrive una sola persona
+-- per squadra, quindi ogni riga rappresenta già un'intera squadra.
 -- ----------------------------------------------------------------------------
-create table vehicle_applications (
+create table beerpong_teams (
   id uuid primary key default gen_random_uuid(),
   code text not null unique,
   event_slug text not null default 'last-call-2026',
   nome text not null,
-  email text not null,
+  cognome text not null,
   telefono text not null,
-  marca text not null,
-  modello text not null,
-  anno integer,
-  targa text,                        -- facoltativa, dato sensibile: vedi nota RLS sotto
-  modifiche text,
-  foto_url text,
-  social text,
+  email text not null,
   status booking_status not null default 'in-attesa',
   created_at timestamptz not null default now()
 );
@@ -92,7 +92,7 @@ create table vehicle_applications (
 -- client resta bloccata di default: RLS abilitata, nessuna policy pubblica.
 -- ----------------------------------------------------------------------------
 alter table guest_list_entries enable row level security;
-alter table vehicle_applications enable row level security;
+alter table beerpong_teams enable row level security;
 alter table capacity_settings enable row level security;
 -- Nessuna "create policy": senza policy pubbliche, solo la service role key
 -- (usata dalle API route server-side) può leggere/scrivere. Il browser non
