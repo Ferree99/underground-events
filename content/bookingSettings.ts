@@ -13,7 +13,7 @@ export const beerPongTournament = {
   intro:
     "Squadre da 2 giocatori: basta che si iscriva una sola persona per squadra, l'altro componente arriva con lei il giorno dell'evento.",
   time: "17:00",
-  fee: "20 € a coppia",
+  fee: "25 € a coppia",
   feeIncludes: "Il beveraggio per giocare incluso per tutte le partite",
   prizes: "Premio finale per le prime 3 squadre classificate",
   afterSubmitMessage:
