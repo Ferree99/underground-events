@@ -7,11 +7,11 @@ import ArtistCard from "@/components/ArtistCard";
 import PromoDrinkCard from "@/components/PromoDrinkCard";
 import MapSection from "@/components/MapSection";
 import GuestListForm from "@/components/forms/GuestListForm";
-import VehicleApplicationForm from "@/components/forms/VehicleApplicationForm";
+import BeerPongForm from "@/components/forms/BeerPongForm";
 import PartnerLogo from "@/components/PartnerLogo";
 import { lastCall2026 } from "@/content/lastCall2026";
 import { drinkPromotions } from "@/content/drinkPromotions";
-import { beerPongAndGames, vehicleApplication } from "@/content/bookingSettings";
+import { beerPongTournament } from "@/content/bookingSettings";
 import { siteSettings } from "@/content/siteSettings";
 import { confirmedPartners, confirmedSponsors } from "@/content/partners";
 
@@ -20,12 +20,24 @@ export const metadata: Metadata = {
   description: lastCall2026.description.main,
 };
 
+// L'evento supera la mezzanotte: se l'orario di chiusura è "prima" di
+// quello di apertura, vuol dire che cade nel giorno successivo.
+function addOneDay(dateStr: string) {
+  const d = new Date(`${dateStr}T00:00:00`);
+  d.setDate(d.getDate() + 1);
+  return d.toISOString().slice(0, 10);
+}
+const eventEndDate =
+  lastCall2026.closingTime <= lastCall2026.openingTime ? addOneDay(lastCall2026.date) : lastCall2026.date;
+
+const streetCarTherapy = confirmedPartners.find((p) => p.name === "Street Car Therapy");
+
 const eventSchema = {
   "@context": "https://schema.org",
   "@type": "Event",
   name: lastCall2026.name,
   startDate: `${lastCall2026.date}T${lastCall2026.openingTime}:00+02:00`,
-  endDate: `${lastCall2026.date}T${lastCall2026.closingTime === "00:00" ? "23:59" : lastCall2026.closingTime}:00+02:00`,
+  endDate: `${eventEndDate}T${lastCall2026.closingTime}:00+02:00`,
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   eventStatus: "https://schema.org/EventScheduled",
   location: {
@@ -46,6 +58,14 @@ const eventSchema = {
   },
   description: lastCall2026.description.main,
 };
+
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
+      <path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.25.07 1.6.07 4.81 0 3.22-.01 3.56-.07 4.81-.15 3.23-1.66 4.77-4.92 4.92-1.25.06-1.6.07-4.85.07-3.2 0-3.6-.01-4.85-.07-3.26-.15-4.77-1.7-4.92-4.92-.06-1.25-.07-1.59-.07-4.81 0-3.21.02-3.56.07-4.81.15-3.23 1.66-4.77 4.92-4.92C8.4 2.2 8.8 2.2 12 2.2Zm0 1.98c-3.15 0-3.52.01-4.76.07-2.14.1-3.12 1.1-3.22 3.22-.06 1.24-.07 1.6-.07 4.75s.01 3.51.07 4.75c.1 2.12 1.08 3.12 3.22 3.22 1.24.06 1.6.07 4.76.07 3.15 0 3.52-.01 4.76-.07 2.14-.1 3.12-1.1 3.22-3.22.06-1.24.07-1.6.07-4.75s-.01-3.51-.07-4.75c-.1-2.12-1.08-3.12-3.22-3.22-1.24-.06-1.6-.07-4.76-.07Zm0 3.37a5.65 5.65 0 1 1 0 11.3 5.65 5.65 0 0 1 0-11.3Zm0 1.98a3.67 3.67 0 1 0 0 7.34 3.67 3.67 0 0 0 0-7.34Zm5.88-2.2a1.32 1.32 0 1 1-2.65 0 1.32 1.32 0 0 1 2.65 0Z" />
+    </svg>
+  );
+}
 
 export default function LastCallPage() {
   return (
@@ -95,8 +115,50 @@ export default function LastCallPage() {
         </div>
       </section>
 
+      {/* Area automotive — nessun modulo: chi vuole portare l'auto scrive
+          direttamente in direct a Street Car Therapy su Instagram. */}
+      <section className="border-t border-ue-line bg-ue-ink">
+        <div className="container-ue py-24">
+          <SectionTitle
+            eyebrow="Raduno"
+            title="Area automotive"
+            description={`Apertura alle ${lastCall2026.openingTime}: ingresso delle vetture sportive, esposizione delle auto e ritrovo della community. Decine di auto sportive esposte lungo il grande prato, in una location direttamente sulle rive del lago.`}
+          />
+          <div className="mt-10 flex flex-wrap items-center gap-8 max-w-2xl">
+            {streetCarTherapy && (
+              <div className="relative h-16 w-40 shrink-0">
+                <Image
+                  src={streetCarTherapy.logo}
+                  alt="Street Car Therapy"
+                  fill
+                  className="object-contain object-left"
+                />
+              </div>
+            )}
+            <div>
+              <p className="text-ue-white/80 max-w-md">
+                Vuoi portare la tua auto a LAST CALL 2026? Scrivi direttamente in direct a Street Car
+                Therapy su Instagram: sarà l&apos;organizzazione a occuparsi della selezione e delle
+                modalità di accesso.
+              </p>
+              {streetCarTherapy?.instagramUrl && (
+                <a
+                  href={streetCarTherapy.instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary mt-5 inline-flex items-center gap-2"
+                >
+                  <InstagramIcon />
+                  Scrivi a Street Car Therapy
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Promo drink + lista */}
-      <section id="lista" className="border-t border-ue-line bg-ue-ink scroll-mt-24">
+      <section id="lista" className="border-t border-ue-line scroll-mt-24">
         <div className="container-ue py-24">
           <SectionTitle eyebrow="Promo" title={drinkPromotions.title} />
           <p className="mt-4 text-ue-red text-sm uppercase tracking-wide">{drinkPromotions.eligibilityNote}</p>
@@ -114,27 +176,28 @@ export default function LastCallPage() {
         </div>
       </section>
 
-      {/* Beer Pong, giochi, sfide e premi */}
-      <section className="container-ue py-24 border-t border-ue-line">
-        <SectionTitle eyebrow="Game Time" title={beerPongAndGames.title} />
-        <p className="mt-4 max-w-2xl text-ue-smoke">{beerPongAndGames.note}</p>
-        <button type="button" disabled className="btn-disabled mt-6">
-          {beerPongAndGames.rulesButtonLabel}
-        </button>
-      </section>
-
-      {/* Area automotive */}
-      <section className="border-t border-ue-line bg-ue-ink">
+      {/* Beer Pong */}
+      <section id="beerpong" className="border-t border-ue-line bg-ue-ink scroll-mt-24">
         <div className="container-ue py-24">
-          <SectionTitle
-            eyebrow="Raduno"
-            title="Area automotive"
-            description={`Apertura raduno alle ${lastCall2026.openingTime}: accoglienza dei partecipanti, ingresso delle vetture sportive, esposizione delle auto e ritrovo della community. Decine di auto sportive esposte lungo il grande prato, in una location direttamente sulle rive del lago.`}
-          />
-          <p className="mt-6 max-w-2xl text-ue-smoke text-sm">{vehicleApplication.note}</p>
+          <SectionTitle eyebrow={`Ore ${beerPongTournament.time}`} title={beerPongTournament.title} description={beerPongTournament.intro} />
+
+          <dl className="mt-10 grid gap-6 sm:grid-cols-3 max-w-2xl">
+            <div>
+              <dt className="text-ue-smoke uppercase text-xs tracking-widest2">Quota</dt>
+              <dd className="mt-1 font-display text-xl text-ue-red">{beerPongTournament.fee}</dd>
+            </div>
+            <div>
+              <dt className="text-ue-smoke uppercase text-xs tracking-widest2">La quota comprende</dt>
+              <dd className="mt-1 text-ue-white/80">{beerPongTournament.feeIncludes}</dd>
+            </div>
+            <div>
+              <dt className="text-ue-smoke uppercase text-xs tracking-widest2">Premi</dt>
+              <dd className="mt-1 text-ue-white/80">{beerPongTournament.prizes}</dd>
+            </div>
+          </dl>
+
           <div className="mt-10 max-w-xl">
-            <h3 className="font-display font-bold uppercase text-xl mb-6">Candida la tua auto</h3>
-            <VehicleApplicationForm />
+            <BeerPongForm />
           </div>
         </div>
       </section>
