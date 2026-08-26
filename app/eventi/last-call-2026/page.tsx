@@ -161,6 +161,7 @@ export default function LastCallPage() {
         <div className="container-ue py-24">
           <SectionTitle eyebrow="Lista" title={drinkPromotions.title} />
           <p className="mt-4 text-ue-red text-sm uppercase tracking-wide">{drinkPromotions.eligibilityNote}</p>
+          <p className="mt-2 text-ue-smoke text-sm max-w-xl">{drinkPromotions.checkInNote}</p>
 
           <div className="mt-12 max-w-xl">
             <GuestListForm />
