@@ -10,8 +10,6 @@ export default function ArtistCard({
   name: string;
   photo: string;
   social: string;
-  bio: string;
-  setTime: string;
 }) {
   const hasRealPhoto = photo.startsWith("/");
   const hasRealSocial = social.startsWith("http");
@@ -35,7 +33,6 @@ export default function ArtistCard({
       </div>
       <div className="p-6">
         <h3 className="font-display font-bold uppercase text-xl">{name}</h3>
-        <p className="mt-2 text-sm text-ue-smoke">Orario set: {setTime}</p>
         {hasRealSocial ? (
           <a
             href={social}
@@ -51,7 +48,6 @@ export default function ArtistCard({
         ) : (
           <p className="mt-1 text-sm text-ue-smoke">Social: {social}</p>
         )}
-        <p className="mt-3 text-sm text-ue-white/80">{bio}</p>
       </div>
     </div>
   );
