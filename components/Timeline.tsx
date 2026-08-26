@@ -11,11 +11,13 @@ export default function Timeline() {
           />
           <p className="font-display text-ue-red text-sm tracking-widest2">{slot.time}</p>
           <h3 className="mt-1 font-display font-bold uppercase text-2xl">{slot.title}</h3>
-          <ul className="mt-3 space-y-1 text-ue-smoke text-sm">
-            {slot.items.map((item) => (
-              <li key={item}>— {item}</li>
-            ))}
-          </ul>
+          {slot.items.length > 0 && (
+            <ul className="mt-3 space-y-1 text-ue-smoke text-sm">
+              {slot.items.map((item) => (
+                <li key={item}>— {item}</li>
+              ))}
+            </ul>
+          )}
         </li>
       ))}
     </ol>
