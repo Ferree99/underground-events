@@ -154,7 +154,53 @@ Supabase → **Table Editor** mostra ogni tabella come un foglio di calcolo: puo
 
 ---
 
-## 8. Statistiche del sito (Google Analytics)
+## 8. Email di conferma automatica (con la casella email del dominio)
+
+Chi si iscrive alla lista o al Beer Pong riceve un'email di conferma automatica, inviata tramite
+**SMTP autenticato di register.it** — la stessa casella email del dominio, con il suo limite di invii
+giornalieri già incluso nel piano esistente (nessun servizio esterno aggiuntivo da configurare).
+
+**Come attivarla:**
+1. Sul [Pannello di controllo register.it](https://www.register.it), apri la sezione **Email** → la
+   casella che vuoi usare come mittente (es. `info@undergroundevents.it`) → **Parametri di
+   configurazione**: da lì trovi il nome esatto del server SMTP, la porta e se serve SSL. Di norma è
+   `authsmtp.securemail.pro`, porta `465`, SSL attivo — ma verifica sempre il valore mostrato nel tuo
+   pannello, può variare.
+2. Su Netlify: **Site configuration → Environment variables**, aggiungi:
+   - `SMTP_HOST` (il server SMTP trovato al punto 1)
+   - `SMTP_PORT` (`465` di norma)
+   - `SMTP_USER` (l'indirizzo email completo, es. `info@undergroundevents.it`)
+   - `SMTP_PASSWORD` (la password di quella casella email — non quella del Pannello di controllo)
+   - `SMTP_SENDER_NAME` (facoltativo, di default "Underground Events")
+3. Rifai il deploy
+
+**Senza queste variabili configurate, il sito funziona esattamente come ora**: l'iscrizione va a buon
+fine, semplicemente non parte nessuna email — nessun errore, nessun blocco.
+
+Se un giorno gli invii dovessero superare il limite giornaliero incluso nel tuo piano register.it,
+l'iscrizione sul sito resta comunque valida: semplicemente quel giorno l'email in più non parte (va
+verificato quale sia il limite esatto della tua casella, non risulta con certezza dalla documentazione
+pubblica di register.it — controllalo nel tuo Pannello di controllo).
+
+---
+
+## 9. Consultare le liste rapidamente (senza aprire Supabase)
+
+La pagina **`/admin`** del sito mostra lista evento e iscrizioni Beer Pong in tabella, con
+esportazione in CSV (apribile con Excel/Numbers/Google Sheets).
+
+1. Su Netlify: **Site configuration → Environment variables** → aggiungi `ADMIN_PASSWORD` con una
+   password a tua scelta (scegline una robusta: chi la conosce vede email, telefono e data di nascita
+   degli iscritti), poi rifai il deploy.
+2. Vai su `undergroundevents.it/admin`, inserisci la password.
+3. Resta valida finché non chiudi la scheda del browser (poi va reinserita).
+
+Non è un vero sistema di account (niente utenti/ruoli separati): è pensato per un piccolo team che
+deve controllare le liste al volo. Non è collegata al menu del sito né indicizzata da Google.
+
+---
+
+## 10. Statistiche del sito (Google Analytics)
 
 Il sito è già predisposto per Google Analytics (GA4), collegato al banner cookie esistente: parte
 **solo** se l'utente accetta i cookie di analisi, e **solo** se hai configurato un ID di misurazione.
@@ -177,7 +223,7 @@ cookie perché non traccia con cookie): si attiva direttamente dal pannello Netl
 
 ---
 
-## 9. Dati ancora mancanti (da completare prima della pubblicazione)
+## 11. Dati ancora mancanti (da completare prima della pubblicazione)
 
 - Regole di accesso, criteri di selezione, costo, registrazione, orario consigliato, categorie ammesse
   e capienza per l'area automotive (in `content/bookingSettings.ts`, marcati `[DA DEFINIRE]`)
@@ -193,7 +239,7 @@ cookie perché non traccia con cookie): si attiva direttamente dal pannello Netl
 
 ---
 
-## 10. Pubblicazione su Netlify
+## 12. Pubblicazione su Netlify
 
 1. Crea un repository Git con questo progetto e caricalo su GitHub/GitLab.
 2. Su [netlify.com](https://www.netlify.com) → "Add new site" → "Import an existing project".
@@ -210,7 +256,7 @@ cookie perché non traccia con cookie): si attiva direttamente dal pannello Netl
 
 ---
 
-## 11. Checklist prima della pubblicazione
+## 13. Checklist prima della pubblicazione
 
 - [ ] Sostituiti tutti i valori `[DA DEFINIRE]` in `content/bookingSettings.ts` e `content/siteSettings.ts`
 - [ ] Caricati gli asset reali del logo in `public/images/logo/` e aggiornato `components/Logo.tsx`
@@ -222,6 +268,8 @@ cookie perché non traccia con cookie): si attiva direttamente dal pannello Netl
 - [ ] Notifiche email attivate per i form "contatti" e "preventivo" nel pannello Netlify
 - [ ] `siteSettings.siteUrl` aggiornato con il dominio definitivo
 - [ ] (facoltativo) Google Analytics collegato: `NEXT_PUBLIC_GA_MEASUREMENT_ID` impostato su Netlify
+- [ ] `ADMIN_PASSWORD` impostata su Netlify per usare la pagina `/admin`
+- [ ] (facoltativo) Email di conferma collegata: `SMTP_HOST`, `SMTP_USER`, `SMTP_PASSWORD` impostate su Netlify (parametri dalla casella email register.it)
 - [ ] Verifica responsive su mobile, tablet, desktop
 - [ ] Verifica navigazione da tastiera e focus visibili
 - [ ] Verifica tutti i link interni (menu, footer, CTA)
@@ -230,7 +278,7 @@ cookie perché non traccia con cookie): si attiva direttamente dal pannello Netl
 
 ---
 
-## 12. Cosa manca ancora in questa prima versione del progetto
+## 14. Cosa manca ancora in questa prima versione del progetto
 
 Per restare fedele al brief senza inventare contenuti, in questa prima consegna sono stati completati:
 Home, LAST CALL 2026, Chi siamo, Servizi, Eventi (archivio con ricerca/filtri), Partner, Contatti,
