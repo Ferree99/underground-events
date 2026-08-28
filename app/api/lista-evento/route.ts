@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import getSupabaseServerClient from "@/lib/supabaseServer";
 import { generateBookingCode, checkCapacity } from "@/lib/bookingHelpers";
 import { sendConfirmationEmail } from "@/lib/sendEmail";
+import { buildEmailHtml } from "@/lib/emailTemplate";
 import { lastCall2026 } from "@/content/lastCall2026";
 
 export async function POST(request: Request) {
@@ -43,18 +44,30 @@ export async function POST(request: Request) {
       subject: waitlisted
         ? `${lastCall2026.name} — sei in lista d'attesa`
         : `${lastCall2026.name} — sei in lista!`,
-      html: `
-        <p>Ciao ${nome},</p>
-        ${
-          waitlisted
-            ? `<p>I posti in lista per <strong>${lastCall2026.name}</strong> sono al momento esauriti: la tua richiesta è stata registrata in lista d'attesa. Ti avviseremo se si libera un posto.</p>`
-            : `<p>La tua richiesta per <strong>${lastCall2026.name}</strong> è stata registrata con successo.</p>`
-        }
-        <p>Codice della tua richiesta: <strong>${code}</strong></p>
-        <p>${lastCall2026.dateLabel} — ${lastCall2026.location.name}, dalle ${lastCall2026.openingTime}</p>
-        <p>Ricordati di accreditarti all'info point il giorno dell'evento e ritirare il tuo bracciale.</p>
-        <p>A presto,<br/>Underground Events</p>
-      `,
+      html: buildEmailHtml({
+        preheader: waitlisted
+          ? "Sei in lista d'attesa per LAST CALL 2026"
+          : "La tua richiesta per LAST CALL 2026 è confermata",
+        heading: waitlisted ? "Sei in lista d'attesa" : "Sei in lista!",
+        code,
+        bodyHtml: `
+          <p style="margin:0 0 16px;">Ciao ${nome},</p>
+          <p style="margin:0 0 16px;">
+            ${
+              waitlisted
+                ? `I posti in lista per <strong>${lastCall2026.name}</strong> sono al momento esauriti: la tua richiesta è stata registrata in lista d'attesa. Ti avviseremo se si libera un posto.`
+                : `La tua richiesta per <strong>${lastCall2026.name}</strong> è stata registrata con successo.`
+            }
+          </p>
+          <p style="margin:0 0 16px;">
+            <strong>${lastCall2026.dateLabel}</strong><br/>
+            ${lastCall2026.location.name} — dalle ${lastCall2026.openingTime}
+          </p>
+          <p style="margin:0;">
+            Ricordati di accreditarti all'info point il giorno dell'evento e ritirare il tuo bracciale.
+          </p>
+        `,
+      }),
     });
 
     return NextResponse.json({ code, status });
